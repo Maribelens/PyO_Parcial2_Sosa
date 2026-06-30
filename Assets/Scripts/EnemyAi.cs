@@ -9,7 +9,7 @@ namespace RPGCombat.Combat
 {
     // SRP: solo controla la IA enemiga
     // DIP: GridManager, CombatActions y TurnManager inyectados por Initialize()
-    public class EnemyAI : MonoBehaviour
+    public class EnemyAi : MonoBehaviour
     {
         private GridManager gridManager;
         private CombatActions combatActions;

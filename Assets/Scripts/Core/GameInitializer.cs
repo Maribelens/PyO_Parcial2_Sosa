@@ -19,7 +19,7 @@ namespace RPGCombat
         [SerializeField] private GridManager gridManager;
         [SerializeField] private TurnManager turnManager;
         [SerializeField] private CombatActions combatActions;
-        [SerializeField] private EnemyAi enemyAI;
+        [SerializeField] private EnemyAI enemyAI;
 
         public List<ICharacter> Players { get; private set; } = new();
         public List<Enemy> Enemies { get; private set; } = new();

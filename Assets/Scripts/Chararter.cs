@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // OCP: abierta a extensión mediante subclases, cerrada a modificación
-public abstract class Chacarter : MonoBehaviour, ICharacter
+public abstract class Chararter : MonoBehaviour, ICharacter
 {
     [Header("Stats")]
     [SerializeField] private string characterName;
@@ -24,7 +24,7 @@ public abstract class Chacarter : MonoBehaviour, ICharacter
     public Vector2Int GridPosition { get; set; }
 
     //Subclases definen sus capacidades (LSP: son sustituibles por Character)
-    public abstract bool HasRangedAttack { get; }
+    public abstract bool HasRangeAttack { get; }
     public abstract bool CanHeal { get; }
 
     protected void Awake() => _currentHP = maxHP;
@@ -52,7 +52,7 @@ public abstract class Chacarter : MonoBehaviour, ICharacter
     // Rango: distancia > 1 y <= rango del personaje
     public virtual bool CanRangeAttack(ICharacter target)
     {
-        if (!HasRangedAttack || target == null || !target.IsAlive) return false;
+        if (!HasRangeAttack || target == null || !target.IsAlive) return false;
         int distance = ManhattanDistance(GridPosition, target.GridPosition);
         return distance > 1 && distance <= RangeAttackMaxDistance;
     }

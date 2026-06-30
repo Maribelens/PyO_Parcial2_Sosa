@@ -6,7 +6,7 @@ public interface ICharacter
     int MaxHP { get; }
     int Speed { get; }
     int MeleeAttackDamage { get; }
-    bool HasRangedAttack { get; }
+    bool HasRangeAttack { get; }
     int RangeAttackDamage { get; }
     int RangeAttackMaxDistance { get; }
     bool CanHeal { get; }

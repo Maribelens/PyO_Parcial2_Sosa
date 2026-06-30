@@ -5,7 +5,7 @@ namespace RPGCombat.Combat
 {
     // SRP: solo ejecuta acciones. No gestiona turnos ni UI
     // DIP: trabaja con ICharacter, no con clases concretas (salvo para el heal amount)
-    public class CombatActons : MonoBehaviour
+    public class CombatActions : MonoBehaviour
     {
         public bool TryMeleeAttack(ICharacter attacker, ICharacter target)
         {

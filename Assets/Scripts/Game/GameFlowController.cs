@@ -35,6 +35,9 @@ public class GameFlowController : MonoBehaviour
         // (instancia personajes e inyecta GridManager/TurnManager/EnemyAI).
         // Acá inyectamos lo restante: PlayerController y PlayerTurnController.
 
+        Application.targetFrameRate = 60;
+        QualitySettings.vSyncCount = 0;
+
         yield return null;
         playerMovement.Initialize(gridManager);
         turnController.Initialize(gridManager, combatActions, turnManager, playerMovement);

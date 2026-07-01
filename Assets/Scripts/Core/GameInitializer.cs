@@ -3,8 +3,9 @@ using UnityEngine;
 using RPGCombat.Characters;
 using RPGCombat.Grid;
 using RPGCombat.Combat;
+using RPGCombat.UI;
 
-namespace RPGCombat 
+namespace RPGCombat
 {
     // Punto de entrada: instancia personajes e inyecta todas las dependencias (DIP)
     public class GameInitializer : MonoBehaviour
@@ -54,6 +55,15 @@ namespace RPGCombat
         {
             turnManager.Initialize(Players, Enemies);
             enemyAI.Initialize(gridManager, combatActions, turnManager);
+        }
+
+        public void ConnectHPDisplays(List<CharacterHPDisplay> displays)
+        {
+            var all = new List<ICharacter>();
+            all.AddRange(Players);
+            all.AddRange(Enemies);
+            for (int i = 0; i < displays.Count && i < all.Count; i++)
+                displays[i].SetCharacter(all[i]);
         }
     }
 }

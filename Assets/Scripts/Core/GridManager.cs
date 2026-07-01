@@ -34,7 +34,7 @@ namespace RPGCombat.Grid
         }
 
         public Vector3 GridToWorld(Vector2Int gridPos)
-            => new Vector3(gridPos.x * cellSize, 0f, gridPos.y * cellSize);
+            => new Vector3(gridPos.x * cellSize, gridPos.y * cellSize, 0f);
 
         public bool IsInBounds(Vector2Int pos)
         => pos.x >= 0 && pos.x < Cols && pos.y >= 0 && pos.y < Rows;

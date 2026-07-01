@@ -62,6 +62,8 @@ namespace RPGCombat.UI
         }
 
         // Se llama cada vez que cambia la fase del turno (movimiento -> acción)
+        public List<CharacterHPDisplay> GetHPDisplays() => hpDisplays;
+
         public void Refresh()
         {
             UpdateTurnLabels();

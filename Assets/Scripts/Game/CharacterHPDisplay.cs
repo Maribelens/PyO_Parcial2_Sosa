@@ -28,5 +28,11 @@ namespace RPGCombat.UI
 
             label.color = character.IsAlive ? Color.white : Color.gray;
         }
+
+        public void SetCharacter(ICharacter c)
+        {
+            character = c;
+            Refresh();
+        }
     }
 }

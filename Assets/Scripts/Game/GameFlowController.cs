@@ -6,6 +6,7 @@ using RPGCombat.Grid;
 using RPGCombat.Player;
 using RPGCombat.UI;
 using RPGCombat;
+using System.Collections.Generic;
 
 namespace RPGCombat 
 {
@@ -24,19 +25,22 @@ public class GameFlowController : MonoBehaviour
     [SerializeField] private EnemyAI enemyAI;
     [SerializeField] private PlayerController playerMovement;
     [SerializeField] private PlayerTurnController turnController;
-    //[SerializeField] private UiGame gameUI;
+    [SerializeField] private UiGame gameUI;
 
     private int currentPlayerTurnIndex = 0;
 
-    private void Start()
+    private IEnumerator Start()
     {
         // El orden importa: GameInitializer ya corrió su propio Start()
         // (instancia personajes e inyecta GridManager/TurnManager/EnemyAI).
         // Acá inyectamos lo restante: PlayerController y PlayerTurnController.
+
+        yield return null;
         playerMovement.Initialize(gridManager);
         turnController.Initialize(gridManager, combatActions, turnManager, playerMovement);
-
         turnController.OnTurnEnded += OnPlayerTurnEnded;
+
+        gameInitializer.ConnectHPDisplays(gameUI.GetHPDisplays());
 
         StartNextPlayerTurn();
     }

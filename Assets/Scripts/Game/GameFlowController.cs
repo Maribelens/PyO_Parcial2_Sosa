@@ -24,7 +24,7 @@ public class GameFlowController : MonoBehaviour
     [SerializeField] private EnemyAI enemyAI;
     [SerializeField] private PlayerController playerMovement;
     [SerializeField] private PlayerTurnController turnController;
-    [SerializeField] private UiGame gameUI;
+    //[SerializeField] private UiGame gameUI;
 
     private int currentPlayerTurnIndex = 0;
 
@@ -85,13 +85,13 @@ public class GameFlowController : MonoBehaviour
     {
         if (turnManager.DidPlayersWin())
         {
-            gameUI.ShowGameOver(playersWon: true);
+            //gameUI.ShowGameOver(playersWon: true);
             return true;
         }
 
         if (turnManager.DidPlayersLose())
         {
-            gameUI.ShowGameOver(playersWon: false);
+            //gameUI.ShowGameOver(playersWon: false);
             return true;
         }
 

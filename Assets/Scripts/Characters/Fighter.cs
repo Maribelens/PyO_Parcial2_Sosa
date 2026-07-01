@@ -5,7 +5,6 @@ namespace RPGCombat.Characters
     public class Fighter : Chararter
     {
         private const int HealAmount = 2;
-
         public override bool HasRangeAttack => false;
         public override bool CanHeal => true;
 

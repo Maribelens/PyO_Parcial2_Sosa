@@ -15,7 +15,7 @@ MonoBehaviour:
   characterName: Fighter
   maxHP: 20
   speed: 3
-  meleeAttackDamage: -5
+  meleeAttackDamage: 5
   hasRangeAttack: 0
   rangeAttackDamage: 0
   rangeAttackMaxDistance: 0

@@ -15,9 +15,9 @@ MonoBehaviour:
   characterName: Enemy
   maxHP: 10
   speed: 1
-  meleeAttackDamage: -3
+  meleeAttackDamage: 3
   hasRangeAttack: 1
-  rangeAttackDamage: -1
+  rangeAttackDamage: 1
   rangeAttackMaxDistance: 3
   canHeal: 0
   healAmount: 0

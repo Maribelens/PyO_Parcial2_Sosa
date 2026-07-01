@@ -89,13 +89,13 @@ public class GameFlowController : MonoBehaviour
     {
         if (turnManager.DidPlayersWin())
         {
-            //gameUI.ShowGameOver(playersWon: true);
+            gameUI.ShowGameOver(playersWon: true);
             return true;
         }
 
         if (turnManager.DidPlayersLose())
         {
-            //gameUI.ShowGameOver(playersWon: false);
+            gameUI.ShowGameOver(playersWon: false);
             return true;
         }
 

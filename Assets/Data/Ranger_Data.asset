@@ -15,9 +15,9 @@ MonoBehaviour:
   characterName: Ranger
   maxHP: 15
   speed: 4
-  meleeAttackDamage: -1
+  meleeAttackDamage: 1
   hasRangeAttack: 1
-  rangeAttackDamage: -3
+  rangeAttackDamage: 3
   rangeAttackMaxDistance: 0
   canHeal: 1
   healAmount: 2

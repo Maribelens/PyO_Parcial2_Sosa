@@ -15,9 +15,9 @@ MonoBehaviour:
   characterName: Healer
   maxHP: 15
   speed: 2
-  meleeAttackDamage: -2
+  meleeAttackDamage: 2
   hasRangeAttack: 1
-  rangeAttackDamage: -2
+  rangeAttackDamage: 2
   rangeAttackMaxDistance: 3
   canHeal: 1
   healAmount: 5

@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a34c9d1029b32a488f29d33444d9848, type: 3}
+  m_Name: Ranger_Data
+  m_EditorClassIdentifier: Assembly-CSharp::RPGCombat.Data.CharacterDataSo
+  characterName: Ranger
+  maxHP: 15
+  speed: 4
+  meleeAttackDamage: -1
+  hasRangeAttack: 1
+  rangeAttackDamage: -3
+  rangeAttackMaxDistance: 0
+  canHeal: 1
+  healAmount: 2
+  healMaxDistance: 0
+  canHealAllies: 0

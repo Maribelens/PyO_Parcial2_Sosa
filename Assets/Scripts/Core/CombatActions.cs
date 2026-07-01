@@ -1,5 +1,6 @@
 using UnityEngine;
 using RPGCombat.Characters;
+using UnityEngine.TextCore.Text;
 
 namespace RPGCombat.Combat 
 {
@@ -27,18 +28,10 @@ namespace RPGCombat.Combat
         {
             if (!healer.CanHealTarget(target)) return false;
 
-            // Patron Strategy: cada personaje sabe cuanto cura
-            int amount = healer switch
-            {
-                Fighter f => f.GetHealAmount(),
-                Healer h => h.GetHealAmount(),
-                Ranger r => r.GetHealAmount(),
-                _ => 0
-            };
+            // Ya no necesita el switch por tipo — el dato está en el SO
+            if (healer is Character ch)
+                target.Heal(healer.HealAmount);
 
-            if (amount == 0) return false;
-            target.Heal(amount);
-            Debug.Log($"{healer.CharacterName} -> cura -> {target.CharacterName} (+{amount} HP)");
             return true;
         }
     }

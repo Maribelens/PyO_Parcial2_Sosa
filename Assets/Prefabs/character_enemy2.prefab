@@ -168,9 +168,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb721be8d54792445ad70dab43fc35e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RPGCombat.Characters.Enemy
-  characterName: Emeny2
-  maxHP: 0
-  speed: 0
-  meleeAttackDamage: 0
-  rangeAttackDamage: 0
-  rangeAttackMaxDistance: 0
+  data: {fileID: 11400000, guid: d5e22b54de71f554783666ac5a62d613, type: 2}

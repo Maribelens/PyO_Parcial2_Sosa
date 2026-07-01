@@ -137,12 +137,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf96263b08b29c4d8dadc011c2ec332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RPGCombat.Characters.Ranger
-  characterName: Ranger
-  maxHP: 0
-  speed: 0
-  meleeAttackDamage: 0
-  rangeAttackDamage: 0
-  rangeAttackMaxDistance: 0
+  data: {fileID: 11400000, guid: c1c4624934a183746abd42f49af1e41b, type: 2}
 --- !u!1 &6853584841193071055
 GameObject:
   m_ObjectHideFlags: 0

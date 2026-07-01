@@ -46,12 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8918cd21370c13143aa4bd17890b3b33, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RPGCombat.Characters.Healer
-  characterName: Healer
-  maxHP: 0
-  speed: 0
-  meleeAttackDamage: 0
-  rangeAttackDamage: 0
-  rangeAttackMaxDistance: 0
+  data: {fileID: 11400000, guid: f23330a5a0448f544a02b2ee620f931f, type: 2}
 --- !u!1 &5886154966465140266
 GameObject:
   m_ObjectHideFlags: 0

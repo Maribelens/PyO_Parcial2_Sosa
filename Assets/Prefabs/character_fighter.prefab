@@ -77,12 +77,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f05c545b01e25464cb93b7ec5f4a2443, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RPGCombat.Characters.Fighter
-  characterName: Fighter
-  maxHP: 0
-  speed: 0
-  meleeAttackDamage: 0
-  rangeAttackDamage: 0
-  rangeAttackMaxDistance: 0
+  data: {fileID: 11400000, guid: 48c4eac4ec067aa43b1cf2dd69230d73, type: 2}
 --- !u!1 &2219149972664331833
 GameObject:
   m_ObjectHideFlags: 0

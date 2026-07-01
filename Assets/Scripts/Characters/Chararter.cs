@@ -1,4 +1,6 @@
 using UnityEngine;
+using RPGCombat.Data;
+using RPGCombat.Characters;
 
 // OCP: abierta a extensión mediante subclases, cerrada a modificación
 
@@ -6,31 +8,24 @@ namespace RPGCombat.Characters
 {
     public abstract class Chararter : MonoBehaviour, ICharacter
     {
-        [Header("Stats")]
-        [SerializeField] private string characterName;
-        [SerializeField] private int maxHP;
-        [SerializeField] private int speed;
-        [SerializeField] private int meleeAttackDamage;
-        [SerializeField] private int rangeAttackDamage;
-        [SerializeField] private int rangeAttackMaxDistance;
+        [Header("Datos del personaje")]
+        [SerializeField] protected CharacterDataSo data;
 
         private int _currentHP;
-
-        public string CharacterName => characterName;
+        public string CharacterName => data.characterName;
+        public int MaxHP => data.maxHP;
+        public int Speed => data.speed;
+        public int MeleeAttackDamage => data.meleeAttackDamage;
+        public bool HasRangeAttack => data.hasRangeAttack;
+        public int RangeAttackDamage => data.rangeAttackDamage;
+        public int RangeAttackMaxDistance => data.rangeAttackMaxDistance;
+        public bool CanHeal => data.canHeal;
+        public int HealAmount => data.healAmount;
         public int CurrentHP => _currentHP;
-        public int MaxHP => maxHP;
-        public int Speed => speed;
-        public int MeleeAttackDamage => meleeAttackDamage;
-        public int RangeAttackDamage => rangeAttackDamage;
-        public int RangeAttackMaxDistance => rangeAttackMaxDistance;
         public bool IsAlive => _currentHP > 0;
         public Vector2Int GridPosition { get; set; }
 
-        //Subclases definen sus capacidades (LSP: son sustituibles por Character)
-        public abstract bool HasRangeAttack { get; }
-        public abstract bool CanHeal { get; }
-
-        protected void Awake() => _currentHP = maxHP;
+        protected virtual void Awake() => _currentHP = data.maxHP;
 
         public void TakeDamage(int damage)
         {
@@ -42,7 +37,7 @@ namespace RPGCombat.Characters
         public void Heal(int amount)
         {
             if (!IsAlive) return;
-            _currentHP = Mathf.Min(maxHP, _currentHP + amount);
+            _currentHP = Mathf.Min(data.maxHP, _currentHP + amount);
         }
 
         // Cuerpo a cuerpo: celda contigua (distancia Chebyshev == 1, cubre diagonales)
@@ -55,11 +50,11 @@ namespace RPGCombat.Characters
         // Rango: distancia > 1 y <= rango del personaje
         public virtual bool CanRangeAttack(ICharacter target)
         {
-            if (!HasRangeAttack || target == null || !target.IsAlive) return false;
-            int distance = ManhattanDistance(GridPosition, target.GridPosition);
-            return distance > 1 && distance <= RangeAttackMaxDistance;
+            if (!data.hasRangeAttack || target == null || !target.IsAlive) return false;
+            int dist = ManhattanDistance(GridPosition, target.GridPosition);
+            return dist > 1 && dist <= data.rangeAttackMaxDistance;
         }
-
+ 
         public abstract bool CanHealTarget(ICharacter target);
         protected virtual void OnDeath() => gameObject.SetActive(false);
 

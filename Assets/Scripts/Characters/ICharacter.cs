@@ -13,6 +13,7 @@ namespace RPGCombat.Characters
         int RangeAttackDamage { get; }
         int RangeAttackMaxDistance { get; }
         bool CanHeal { get; }
+        int HealAmount { get; }
         bool IsAlive { get; }
         Vector2Int GridPosition { get; set; }
 

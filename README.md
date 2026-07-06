@@ -1,3 +1,5 @@
+ACLARACION:Para el desarrollo de este proyecto se utilizó asistencia de IA como herramienta de apoyo para la estructura base de clases y resolución de errores puntuales. Todas las decisiones de diseño, integración en Unity y configuración de escena fueron realizadas por el alumno.
+
 #RPG Combat — 2° Examen Parcial
 **Materia:** Portabilidad y Optimización
 

@@ -54,8 +54,9 @@ namespace RPGCombat.Characters
             int dist = ManhattanDistance(GridPosition, target.GridPosition);
             return dist > 1 && dist <= data.rangeAttackMaxDistance;
         }
- 
+
         public abstract bool CanHealTarget(ICharacter target);
+
         protected virtual void OnDeath() => gameObject.SetActive(false);
 
         //Chebyshev: adyacencia en 8 direcciones (incluye diagonal)

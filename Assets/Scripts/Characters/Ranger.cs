@@ -1,4 +1,3 @@
-
 namespace RPGCombat.Characters
 {
     //Player 3: 15HP | vel 4 | melee -1HP | rango -3HP (cualquier distancia) | cura +2HP solo a sí mismo

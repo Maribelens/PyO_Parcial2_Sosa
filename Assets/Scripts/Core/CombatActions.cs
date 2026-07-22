@@ -12,7 +12,9 @@ namespace RPGCombat.Combat
         {
             if (!attacker.CanMeleeAttack(target)) return false;
             target.TakeDamage(attacker.MeleeAttackDamage);
+#if UNITY_EDITOR
             Debug.Log($"{attacker.CharacterName} -> melee -> {target.CharacterName} ({attacker.MeleeAttackDamage} dmg)");
+#endif
             return true;
         }
 
@@ -20,7 +22,9 @@ namespace RPGCombat.Combat
         {
             if (!attacker.CanRangeAttack(target)) return false;
             target.TakeDamage(attacker.RangeAttackDamage);
+#if UNITY_EDITOR
             Debug.Log($"{attacker.CharacterName} -> rango -> {target.CharacterName} ({attacker.RangeAttackDamage} dmg)");
+#endif
             return true;
         }
 

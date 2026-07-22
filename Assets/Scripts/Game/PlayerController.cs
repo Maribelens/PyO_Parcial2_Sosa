@@ -1,6 +1,9 @@
 using RPGCombat.Characters;
 using RPGCombat.Grid;
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 namespace RPGCombat.Player
 {
@@ -41,7 +44,7 @@ namespace RPGCombat.Player
 
         private Vector2Int ReadDirectionInput()
         {
-            // WASD o flechas, como pide el enunciado
+            // Input de teclado (PC) - sin cambios
             if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
                 return Vector2Int.up;
             if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
@@ -51,8 +54,53 @@ namespace RPGCombat.Player
             if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow))
                 return Vector2Int.right;
 
+            //Input touch (Android)
+#if UNITY_ANDROID
+            if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) 
+            {
+                Vector2 touchPos = Input.GetTouch(0).position;
+                return GetDirectionFromTouchPosition(touchPos);
+            }
+#endif
+
             return Vector2Int.zero;
         }
+
+#if UNITY_ANDROID
+        private bool IsTouchOverUI(Vector2 touchPos) 
+        {
+            PointerEventData eventData = new PointerEventData(EventSystem.current) 
+            { position = touchPos };
+            var results = new System.Collections.Generic.List<RaycastResult>();
+            EventSystem.current.RaycastAll(eventData, results);
+            return results.Count > 0;
+        }
+
+        private Vector2Int GetDirectionFromTouchPosition(Vector2 touchScreenPos)
+        {
+            if (IsTouchOverUI(touchScreenPos)) return Vector2Int.zero;
+
+            //conversion de posicion de pantalla a posicion en el mundo
+            Vector3 worldPos = Camera.main.ScreenToWorldPoint(
+                new Vector3(touchScreenPos.x, touchScreenPos.y,
+                Camera.main.nearClipPlane));
+
+            //conversion de posicion del mundo a coordenadas de grilla
+            Vector2Int touchedCell = gridManager.WorldToGrid(worldPos);
+
+            //calculo direccion relativa al personaje activo
+            Vector2Int currentPos = activeCharacter.GridPosition;
+            Vector2Int delta = touchedCell - currentPos;
+
+            if (delta == Vector2Int.zero) return Vector2Int.zero;
+
+            //normalizar a una sola direccion cardinal
+            if (Mathf.Abs(delta.x) >= Mathf.Abs(delta.y))
+                return new Vector2Int((int)Mathf.Sign(delta.x), 0);
+            else
+                return new Vector2Int(0, (int)Mathf.Sign(delta.y));
+        }
+#endif
 
         private void TryStep(Vector2Int direction)
         {

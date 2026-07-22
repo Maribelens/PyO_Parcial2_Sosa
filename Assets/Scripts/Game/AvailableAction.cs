@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using RPGCombat.Characters;
-using UnityEngine.InputSystem;
 
 namespace RPGCombat.Player 
 {

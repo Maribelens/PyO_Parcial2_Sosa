@@ -110,3 +110,11 @@ InitTestScene*.unity*
 
 #keystore
 *.keystore
+
+# Unity build outputs
+/Build*/
+/Library/
+/Temp/
+/Obj/
+*.apk
+*.aab

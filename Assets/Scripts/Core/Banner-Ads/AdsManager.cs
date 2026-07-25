@@ -15,11 +15,11 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener
     private void Awake()
     {
 #if UNITY_ANDROID
-        gameId = "6111710";
+        gameId = "6159286";
 #elif UNITY_IOS
-    gameId = "6111711";
+    gameId = "6159287";
 #elif UNITY_EDITOR
-        gameId = "6111710";
+        gameId = "6159286";
 #endif
 
         if (!Advertisement.isInitialized && Advertisement.isSupported)

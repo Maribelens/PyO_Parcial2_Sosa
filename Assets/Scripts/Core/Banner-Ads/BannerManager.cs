@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Advertisements;
 
-public class BannerManager : MonoBehaviour
+public class BannerManager : MonoBehaviour, IBannerManager
 {
     [Header("IDs")]
     [SerializeField] private string _androidAdUnitId = "Banner_Android";

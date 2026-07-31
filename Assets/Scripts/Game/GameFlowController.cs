@@ -27,6 +27,9 @@ public class GameFlowController : MonoBehaviour
     [SerializeField] private PlayerTurnController turnController;
     [SerializeField] private UiGame gameUI;
 
+    [Header("Ads")]
+    [SerializeField] private AdsManager adsManager;
+
     private int currentPlayerTurnIndex = 0;
 
     private IEnumerator Start()
@@ -93,12 +96,18 @@ public class GameFlowController : MonoBehaviour
         if (turnManager.DidPlayersWin())
         {
             gameUI.ShowGameOver(playersWon: true);
+#if UNITY_ANDROID
+            adsManager.ShowInterstitial();
+#endif
             return true;
         }
 
         if (turnManager.DidPlayersLose())
         {
             gameUI.ShowGameOver(playersWon: false);
+#if UNITY_ANDROID
+            adsManager.ShowInterstitial();
+#endif
             return true;
         }
 

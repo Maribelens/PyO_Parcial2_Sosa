@@ -3,7 +3,6 @@ using UnityEngine.Advertisements;
 
 public class InterstitialManager : AdBaseManager
 {
-    public bool adLoaded { get; private set; }
     public void LoadInterstitial() => LoadAd();
 
     public void ShowInterstitial()
@@ -19,8 +18,3 @@ public class InterstitialManager : AdBaseManager
         bannerManager.ShowBanner();
     }
 }
-////    protected override void OnShowComplete(UnityAdsShowCompletionState completionState)
-////    {
-////        Debug.Log("Terminó de ver el interstitial");
-////    }
-////}

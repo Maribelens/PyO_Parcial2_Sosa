@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -9,7 +10,7 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener
 
     [Header("Ad Managers")]
     [SerializeField] private BannerManager bannerManager;
-    [SerializeField] private InterstinitialManager interstinitialManager;
+    [SerializeField] private InterstitialManager interstitialManager;
     [SerializeField] private RewardedManager rewardedManager;
 
     private void Awake()
@@ -29,8 +30,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener
     {
         Debug.Log("Unity Ads inicialization completed");
         bannerManager.LoadBanner();
-        interstinitialManager.Initialize(bannerManager);
-        interstinitialManager.LoadInterstinitial();
+        interstitialManager.Initialize(bannerManager);
+        interstitialManager.LoadInterstitial();
         rewardedManager.Initialize(bannerManager);
         rewardedManager.LoadRewarded();
     }
@@ -40,7 +41,8 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener
         Debug.Log($"Unity Ads inicialization error: {error.ToString()} - {message}");
     }
 
-    //public void ShowBanner() => bannerManager.LoadBanner();
-    //public void ShowInterstitial() => interstinitialManager.ShowInterstinitial();
-    //public void ShowRewarded(Action onRewarded) => rewardedManager.ShowRewarded(onRewarded);
+    public void ShowBanner() => bannerManager.LoadBanner();
+    public void HideBanner() => bannerManager.HideBanner();
+    public void ShowInterstitial() => interstitialManager.ShowInterstitial();
+    public void ShowRewarded(Action onRewarded) => rewardedManager.ShowRewarded(onRewarded);
 }

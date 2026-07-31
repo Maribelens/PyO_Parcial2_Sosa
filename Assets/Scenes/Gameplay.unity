@@ -771,7 +771,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AdsManager
   isTestMode: 1
   bannerManager: {fileID: 1107911428}
-  interstinitialManager: {fileID: 1009704020}
+  interstitialManager: {fileID: 1009704022}
   rewardedManager: {fileID: 1293598575}
 --- !u!4 &264291205
 Transform:
@@ -2084,7 +2084,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1009704021}
-  - component: {fileID: 1009704020}
+  - component: {fileID: 1009704022}
   m_Layer: 0
   m_Name: InterstinitialManager
   m_TagString: Untagged
@@ -2092,22 +2092,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1009704020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1009704019}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 496424d098493d0469ad8a845143c117, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InterstinitialManager
-  bannerManager: {fileID: 1107911428}
-  _androidAdUnitId: Interstitial_Android
-  _iOSAdUnitId: Interstitial_iOS
-  adLoaded: 0
 --- !u!4 &1009704021
 Transform:
   m_ObjectHideFlags: 0
@@ -2123,6 +2107,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 264291205}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1009704022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1009704019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e9dcc054504b6e42a81fa799d5bcfad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InterstitialManager
+  _androidAdUnitId: Interstitial_Android
+  _iOSAdUnitId: Interstitial_iOS
 --- !u!1 &1028146575
 GameObject:
   m_ObjectHideFlags: 0
@@ -3170,7 +3168,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d5c836830b5db4ebb61e0c3a395aaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::RewardedManager
-  bannerManager: {fileID: 1107911428}
   _androidAdUnitId: Rewarded_Android
   _iOSAdUnitId: Rewarded_iOS
 --- !u!4 &1293598576
@@ -4870,6 +4867,7 @@ MonoBehaviour:
   playerMovement: {fileID: 2014942526}
   turnController: {fileID: 1081776970}
   gameUI: {fileID: 920755604}
+  adsManager: {fileID: 264291204}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

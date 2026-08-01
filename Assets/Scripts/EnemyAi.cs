@@ -4,6 +4,8 @@ using System.Linq;
 using UnityEngine;
 using RPGCombat.Characters;
 using RPGCombat.Grid;
+using UnityEditor.Experimental.GraphView;
+using UnityEngine.TextCore.Text;
 
 namespace RPGCombat.Combat
 {
@@ -114,7 +116,7 @@ namespace RPGCombat.Combat
 
             foreach (var player in players)
             {
-                int dist = Chararter.ManhattanDistance(enemy.GridPosition, player.GridPosition);
+                int dist = Characters.Character.ManhattanDistance(enemy.GridPosition, player.GridPosition);
                 if (dist < minDist) { minDist = dist; candidates.Clear(); }
                 if (dist == minDist) candidates.Add(player);
             }
@@ -124,19 +126,65 @@ namespace RPGCombat.Combat
                 : null;
         }
 
-        //declaracion de firma y cuerpo
+        // Devuelve la celda destino de cada enemigo vivo sin moverlos.
+        // Usado por la recompensa del rewarded ad para mostrar el highlight
+        // en la celda a la que se va a mover cada enemigo en su próximo turno.
         public Dictionary<Enemy, Vector2Int> GetPredictedPositions(
-        List<Enemy> enemies, List<ICharacter> players) 
+        List<Enemy> enemies, List<ICharacter> characters)
         {
-            var result = new Dictionary<Enemy, Vector2Int>();
+            var predictions = new Dictionary<Enemy, Vector2Int>();
+            var alivePlayers = characters.Where(p => p.IsAlive).ToList();
 
-            // Ejemplo: asignar posiciones ficticias
-            foreach (var enemy in enemies)
+            foreach (var enemy in enemies.Where(e => e.IsAlive))
             {
-                result[enemy] = new Vector2Int(0, 0); // reemplaza con tu lógica
+                // Simula los pasos de velocidad sin mover a nadie
+                Vector2Int simulatedPos = enemy.GridPosition;
+                for(int step = 0; step < enemy.Speed; step++) 
+                {
+                    //buscar jugador mas cercno desde la posicion simulada
+                    ICharacter nearest = GetNearestPlayerFromPosition(simulatedPos, alivePlayers);
+                    if (nearest == null) break;
+
+                    Vector2Int nextPos = CalculateNextPosition(simulatedPos, nearest.GridPosition);
+
+                    // Solo avanza si la celda está libre en la simulación
+                    // (no llama a TryMove, no mueve nada real)
+                    if (gridManager.IsInBounds(nextPos) && !gridManager.IsOccupied(nextPos))
+                        simulatedPos = nextPos;
+                    else
+                    {
+                        //intenta el eje secundario en la simulacion
+                        var fallback = GetFallbackPosition(simulatedPos, nearest.GridPosition);
+                        if (fallback.HasValue && !gridManager.IsOccupied(fallback.Value))
+                            simulatedPos = fallback.Value;
+                        else
+                            break; //bloqueado en ambos ejes, se queda donde esta
+                    }
+                }
+
+                predictions[enemy] = simulatedPos;
             }
 
-            return result;
+            return predictions;
+        }
+
+        // Versión de GetNearestPlayer que opera desde una posición arbitraria
+        // en vez de desde la posición actual del enemigo — necesaria para la simulación
+        private ICharacter GetNearestPlayerFromPosition(Vector2Int from, List<ICharacter> characters) 
+        {
+            var candidates = new List<ICharacter>();
+            int minDistance = int.MaxValue;
+
+            foreach(var character in characters) 
+            {
+                int distance = Characters.Character.ManhattanDistance(from, character.GridPosition);
+                if (distance < minDistance) { minDistance = distance; candidates.Clear(); }
+                if (distance == minDistance) candidates.Add(character);
+            }
+
+            return candidates.Count > 0
+                ? candidates[Random.Range(0, candidates.Count)]
+                : null;
         }
     }
 }

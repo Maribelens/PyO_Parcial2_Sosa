@@ -1,7 +1,7 @@
 namespace RPGCombat.Characters
 {
     // Player 2: 15HP | vel 2 | melee -2HP | rango -2HP (max 3) | cura +5HP
-    public class Healer : Chararter
+    public class Healer : Character
     {
         public override bool CanHealTarget(ICharacter target)
         {

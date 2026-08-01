@@ -6,7 +6,7 @@ using RPGCombat.Characters;
 
 namespace RPGCombat.Characters
 {
-    public abstract class Chararter : MonoBehaviour, ICharacter
+    public abstract class Character : MonoBehaviour, ICharacter
     {
         [Header("Datos del personaje")]
         [SerializeField] protected CharacterDataSo data;

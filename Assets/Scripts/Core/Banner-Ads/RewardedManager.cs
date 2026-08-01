@@ -3,6 +3,9 @@ using UnityEngine.Advertisements;
 using System;
 using RPGCombat.Combat;
 using RPGCombat.Grid;
+using RPGCombat.Characters;
+using System.Collections.Generic;
+using UnityEngine.TextCore.Text;
 
 public class RewardedManager : AdBaseManager
 {
@@ -37,9 +40,9 @@ public class RewardedManager : AdBaseManager
         bannerManager.ShowBanner();
     }
 }
-    //public void OnRewardedAdCompleted()
-    //{
-    //    int revealDuration = 2; // dura 2 rondas completas
-    //    gridManager.RevealEnemyPositions(turnManager.GetAliveEnemies(), revealDuration);
-    //    turnManager.ActivateEnemyReveal(revealDuration);
-    //}
+//public void OnRewardedAdCompleted()
+//{
+//    int revealDuration = 2; // dura 2 rondas completas
+//    gridManager.RevealEnemyPositions(turnManager.GetAliveEnemies(), revealDuration);
+//    turnManager.ActivateEnemyReveal(revealDuration);
+//}

@@ -6,10 +6,6 @@ using RPGCombat.Grid;
 
 public class RewardedManager : AdBaseManager
 {
-    [Header ("Reward")]
-    [SerializeField] TurnManager turnManager;
-    [SerializeField] GridManager gridManager;
-
     private Action _onRewarded;
     private Action<bool> onAdLoadedChanged;
 
@@ -40,11 +36,10 @@ public class RewardedManager : AdBaseManager
         LoadAd();
         bannerManager.ShowBanner();
     }
-
-    public void OnRewardedAdCompleted()
-    {
-        int revealDuration = 2; // dura 2 rondas completas
-        gridManager.RevealEnemyPositions(turnManager.GetAliveEnemies(), revealDuration);
-        turnManager.ActivateEnemyReveal(revealDuration);
-    }
 }
+    //public void OnRewardedAdCompleted()
+    //{
+    //    int revealDuration = 2; // dura 2 rondas completas
+    //    gridManager.RevealEnemyPositions(turnManager.GetAliveEnemies(), revealDuration);
+    //    turnManager.ActivateEnemyReveal(revealDuration);
+    //}

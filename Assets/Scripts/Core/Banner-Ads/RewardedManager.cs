@@ -1,9 +1,15 @@
 using UnityEngine;
 using UnityEngine.Advertisements;
 using System;
+using RPGCombat.Combat;
+using RPGCombat.Grid;
 
 public class RewardedManager : AdBaseManager
 {
+    [Header ("Reward")]
+    [SerializeField] TurnManager turnManager;
+    [SerializeField] GridManager gridManager;
+
     private Action _onRewarded;
     private Action<bool> onAdLoadedChanged;
 
@@ -24,7 +30,7 @@ public class RewardedManager : AdBaseManager
 
     public override void OnUnityAdsShowComplete(string _adUnitId, UnityAdsShowCompletionState state)
     {
-        if(_adUnitId.Equals(adUnitId) && state.Equals(UnityAdsCompletionState.COMPLETED))
+        if (_adUnitId.Equals(adUnitId) && state.Equals(UnityAdsCompletionState.COMPLETED))
         {
             _onRewarded?.Invoke();
             _onRewarded = null;
@@ -33,5 +39,12 @@ public class RewardedManager : AdBaseManager
         onAdLoadedChanged?.Invoke(false);
         LoadAd();
         bannerManager.ShowBanner();
+    }
+
+    public void OnRewardedAdCompleted()
+    {
+        int revealDuration = 2; // dura 2 rondas completas
+        gridManager.RevealEnemyPositions(turnManager.GetAliveEnemies(), revealDuration);
+        turnManager.ActivateEnemyReveal(revealDuration);
     }
 }

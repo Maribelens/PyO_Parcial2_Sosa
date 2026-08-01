@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using RPGCombat.Characters;
+using RPGCombat.Grid;
 
 namespace RPGCombat.Combat
 {
@@ -11,9 +12,12 @@ namespace RPGCombat.Combat
     // DIP: recibe listas inyectadas, sin Singleton
     public class TurnManager : MonoBehaviour
     {
+        [SerializeField] GridManager gridManager;
+        
         private List<ICharacter> players = new();
         private List<Enemy> enemies = new();
         private int currentPlayerIndex = 0;
+        private int enemyRevealTurnsRemaining = 0;
 
         public GameState CurrentState { get; private set; } = GameState.WaitingForInput;
 
@@ -47,6 +51,22 @@ namespace RPGCombat.Combat
             EvaluateGameOver();
             if (CurrentState != GameState.GameOver)
                 CurrentState = GameState.WaitingForInput;
+        }
+
+        public void ActivateEnemyReveal(int turns)
+        {
+            enemyRevealTurnsRemaining = turns;
+        }
+
+        // Llamado al final de cada ronda completa (después del turno enemigo)
+        public void OnRoundEnded()
+        {
+            if (enemyRevealTurnsRemaining > 0)
+            {
+                enemyRevealTurnsRemaining--;
+                if (enemyRevealTurnsRemaining == 0)
+                    gridManager.HideEnemyHighlights();
+            }
         }
 
         private void EvaluateGameOver()

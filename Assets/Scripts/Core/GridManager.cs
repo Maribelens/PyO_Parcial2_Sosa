@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RPGCombat.Characters;
+using System.Linq;
 
 namespace RPGCombat.Grid
 {
@@ -97,6 +98,29 @@ namespace RPGCombat.Grid
                 all.RemoveAt(idx);
             }
             return result;
+        }
+
+        public void RevealEnemyPositions(List<Enemy> enemies, int durationInTurns)
+        {
+            foreach (var enemy in enemies.Where(e => e.IsAlive))
+            {
+                var pos = enemy.GridPosition;
+                var cell = cells[pos.y, pos.x];
+                var highlight = cell.transform.Find("EnemyHighlight");
+                if (highlight != null)
+                    highlight.gameObject.SetActive(true);
+            }
+            // durationInTurns lo maneja TurnManager
+        }
+
+        public void HideEnemyHighlights()
+        {
+            foreach (var cell in cells)
+            {
+                var highlight = cell.transform.Find("EnemyHighlight");
+                if (highlight != null)
+                    highlight.gameObject.SetActive(false);
+            }
         }
     }
 }

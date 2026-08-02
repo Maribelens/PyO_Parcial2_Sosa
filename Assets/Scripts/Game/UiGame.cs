@@ -33,7 +33,8 @@ namespace RPGCombat.UI
         [SerializeField] private List<CharacterHPDisplay> hpDisplays;
 
         [Header("Panel de fin de partida")]
-        [SerializeField] private GameObject gameOverPanel;
+        [SerializeField] private CanvasGroup gameOverCanvasGroup;
+        //[SerializeField] private GameObject gameOverPanel;
         [SerializeField] private TMP_Text gameOverLabel;
 
         private List<AvailableAction> currentActions = new();
@@ -58,7 +59,8 @@ namespace RPGCombat.UI
             healButton.onClick.AddListener(() => SelectActionType(ActionType.Heal));
 
             HideTargetButtons();
-            gameOverPanel.SetActive(false);
+            SetStateCanvasGroup(gameOverCanvasGroup, false);
+            //gameOverPanel.SetActive(false);
         }
 
         // Se llama cada vez que cambia la fase del turno (movimiento -> acción)
@@ -147,9 +149,18 @@ namespace RPGCombat.UI
                 display.Refresh();
         }
 
+        private void SetStateCanvasGroup(CanvasGroup canvasGroup, bool state)
+        {
+            // Activa o desactiva visibilidad e interacción de un panel
+            canvasGroup.alpha = state ? 1 : 0;
+            canvasGroup.interactable = state;
+            canvasGroup.blocksRaycasts = state;
+        }
+
         public void ShowGameOver(bool playersWon)
         {
-            gameOverPanel.SetActive(true);
+            SetStateCanvasGroup(gameOverCanvasGroup, true);
+            //gameOverPanel.SetActive(true);
             gameOverLabel.text = playersWon ? "¡Victoria!" : "Derrota";
         }
     }

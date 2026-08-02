@@ -7,8 +7,8 @@ using UnityEngine.UIElements;
 
 namespace RPGCombat.Player
 {
-    // SRP: solo traduce input de teclado en movimiento sobre la grilla.
-    // No sabe nada de turnos, combate ni UI.
+    // SRP traduce input de teclado en movimiento sobre la grilla
+    // No sabe turnos, combate ni UI
     public class PlayerController : MonoBehaviour
     {
         private GridManager gridManager;
@@ -18,7 +18,7 @@ namespace RPGCombat.Player
 
         public bool HasMovedThisTurn { get; private set; }
 
-        // DIP: GridManager inyectado, no buscado con FindObjectOfType ni Singleton
+        // DIP GridManager inyectado, no buscado con FindObjectOfType ni Singleton
         public void Initialize(GridManager grid)
         {
             gridManager = grid;

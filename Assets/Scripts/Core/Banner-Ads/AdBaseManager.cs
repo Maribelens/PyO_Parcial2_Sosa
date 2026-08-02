@@ -9,7 +9,7 @@ public abstract class AdBaseManager : MonoBehaviour, IUnityAdsLoadListener, IUni
 
     protected string adUnitId;
     protected IBannerManager bannerManager;
-    //protected BannerManager bannerManager;
+
     public bool adLoaded { get; private set; }
 
     protected virtual void Awake()

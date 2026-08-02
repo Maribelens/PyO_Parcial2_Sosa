@@ -6,6 +6,9 @@ using RPGCombat.Grid;
 using RPGCombat.Characters;
 using System.Collections.Generic;
 using UnityEngine.TextCore.Text;
+using RPGCombat.Player;
+using System.Collections;
+using RPGCombat.Ads;
 
 public class RewardedManager : AdBaseManager
 {
@@ -29,20 +32,13 @@ public class RewardedManager : AdBaseManager
 
     public override void OnUnityAdsShowComplete(string _adUnitId, UnityAdsShowCompletionState state)
     {
-        if (_adUnitId.Equals(adUnitId) && state.Equals(UnityAdsCompletionState.COMPLETED))
+        if (_adUnitId.Equals(adUnitId) && state.Equals(UnityAdsShowCompletionState.COMPLETED))
         {
             _onRewarded?.Invoke();
             _onRewarded = null;
-            Debug.Log("Recompensa otorgada");
         }
         onAdLoadedChanged?.Invoke(false);
         LoadAd();
         bannerManager.ShowBanner();
     }
 }
-//public void OnRewardedAdCompleted()
-//{
-//    int revealDuration = 2; // dura 2 rondas completas
-//    gridManager.RevealEnemyPositions(turnManager.GetAliveEnemies(), revealDuration);
-//    turnManager.ActivateEnemyReveal(revealDuration);
-//}

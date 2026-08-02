@@ -2,15 +2,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using RPGCombat.Characters;
 using RPGCombat.Player;
 
-namespace RPGCombat.UI 
+namespace RPGCombat.UI
 {
     // SRP pinta el estado actual en pantalla y traduce clicks de Button
     //en llamadas a PlayerTurnController. No decide reglas de turno ni de combate
 
-    public class UiGame : MonoBehaviour
+    public class GameUI : MonoBehaviour
     {
         [Header("Dependencias (asignar en Inspector)")]
         [SerializeField] private PlayerTurnController turnController;
@@ -34,6 +35,7 @@ namespace RPGCombat.UI
         [Header("Panel de fin de partida")]
         [SerializeField] private CanvasGroup gameOverCanvasGroup;
         [SerializeField] private TMP_Text gameOverLabel;
+        [SerializeField] private Button restartButton;
 
         private List<AvailableAction> currentActions = new();
         private ActionType selectedActionType;
@@ -56,8 +58,22 @@ namespace RPGCombat.UI
             rangeButton.onClick.AddListener(() => SelectActionType(ActionType.Range));
             healButton.onClick.AddListener(() => SelectActionType(ActionType.Heal));
 
+            // 3. Listener para reiniciar la escena al hacer click
+            if (restartButton != null)
+            {
+                restartButton.onClick.AddListener(RestartGame);
+            }
+
             HideTargetButtons();
-            SetStateCanvasGroup(gameOverCanvasGroup, false);
+            gameOverCanvasGroup.SetState(false);
+        }
+
+        private void OnDestroy()
+        {
+            if (restartButton != null)
+            {
+                restartButton.onClick.RemoveListener(RestartGame);
+            }
         }
 
         // Se llama cada vez que cambia la fase del turno (movimiento -> acción)
@@ -146,18 +162,15 @@ namespace RPGCombat.UI
                 display.Refresh();
         }
 
-        private void SetStateCanvasGroup(CanvasGroup canvasGroup, bool state)
-        {
-            // Activa o desactiva visibilidad e interacción de un panel
-            canvasGroup.alpha = state ? 1 : 0;
-            canvasGroup.interactable = state;
-            canvasGroup.blocksRaycasts = state;
-        }
-
         public void ShowGameOver(bool playersWon)
         {
-            SetStateCanvasGroup(gameOverCanvasGroup, true);
+            gameOverCanvasGroup.SetState(true);
             gameOverLabel.text = playersWon ? "¡Victoria!" : "Derrota";
+        }
+        private void RestartGame()
+        {
+            int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(currentSceneIndex);
         }
     }
 }

@@ -4,8 +4,6 @@ using System.Linq;
 using UnityEngine;
 using RPGCombat.Characters;
 using RPGCombat.Grid;
-using UnityEditor.Experimental.GraphView;
-using UnityEngine.TextCore.Text;
 
 namespace RPGCombat.Combat
 {

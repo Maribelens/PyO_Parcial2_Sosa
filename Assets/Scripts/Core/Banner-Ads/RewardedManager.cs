@@ -1,14 +1,5 @@
-using UnityEngine;
 using UnityEngine.Advertisements;
 using System;
-using RPGCombat.Combat;
-using RPGCombat.Grid;
-using RPGCombat.Characters;
-using System.Collections.Generic;
-using UnityEngine.TextCore.Text;
-using RPGCombat.Player;
-using System.Collections;
-using RPGCombat.Ads;
 
 public class RewardedManager : AdBaseManager
 {
@@ -39,6 +30,5 @@ public class RewardedManager : AdBaseManager
         }
         onAdLoadedChanged?.Invoke(false);
         LoadAd();
-        bannerManager.ShowBanner();
     }
 }

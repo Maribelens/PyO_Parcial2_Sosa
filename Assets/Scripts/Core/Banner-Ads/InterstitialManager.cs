@@ -1,4 +1,3 @@
-using UnityEngine;
 using UnityEngine.Advertisements;
 
 public class InterstitialManager : AdBaseManager
@@ -13,8 +12,6 @@ public class InterstitialManager : AdBaseManager
 
     public override void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState state)
     {
-        Debug.Log("Termino de ver el interstitial");
         LoadAd();
-        bannerManager.ShowBanner();
     }
 }

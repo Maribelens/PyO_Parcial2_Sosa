@@ -26,20 +26,46 @@ public class AdsManager : MonoBehaviour, IUnityAdsInitializationListener
         if (!Advertisement.isInitialized && Advertisement.isSupported)
             Advertisement.Initialize(gameId, isTestMode, this);
     }
-    public void OnInitializationComplete()
+
+    private void OnEnable()
     {
-        Debug.Log("Unity Ads inicialization completed");
-        bannerManager.LoadBanner();
-        interstitialManager.Initialize(bannerManager);
-        interstitialManager.LoadInterstitial();
-        rewardedManager.Initialize(bannerManager);
-        rewardedManager.LoadRewarded();
+        // Suscribir eventos para controlar la visibilidad del Banner automáticamente
+        if (interstitialManager != null)
+        {
+            interstitialManager.OnAdStarted += HideBanner;
+            interstitialManager.OnAdCompleted += ShowBanner;
+        }
+        if (rewardedManager != null)
+        {
+            rewardedManager.OnAdStarted += HideBanner;
+            rewardedManager.OnAdCompleted += ShowBanner;
+        }
     }
 
-    public void OnInitializationFailed(UnityAdsInitializationError error, string message)
+    private void OnDisable()
     {
-        Debug.Log($"Unity Ads inicialization error: {error.ToString()} - {message}");
+        if (interstitialManager != null)
+        {
+            interstitialManager.OnAdStarted -= HideBanner;
+            interstitialManager.OnAdCompleted -= ShowBanner;
+        }
+
+        if (rewardedManager != null)
+        {
+            rewardedManager.OnAdStarted -= HideBanner;
+            rewardedManager.OnAdCompleted -= ShowBanner;
+        }
     }
+
+    public void OnInitializationComplete()
+    {
+        // Se inicializan sin redundancias de doble Load()
+        bannerManager.LoadBanner();
+        interstitialManager.Initialize();
+        rewardedManager.Initialize();
+    }
+
+    public void OnInitializationFailed(UnityAdsInitializationError error, string message) { }
 
     public void ShowBanner() => bannerManager.LoadBanner();
     public void HideBanner() => bannerManager.HideBanner();

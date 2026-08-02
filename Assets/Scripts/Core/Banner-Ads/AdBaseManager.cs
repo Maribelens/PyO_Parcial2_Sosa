@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -8,9 +9,10 @@ public abstract class AdBaseManager : MonoBehaviour, IUnityAdsLoadListener, IUni
     [SerializeField] private string _iOSAdUnitId;
 
     protected string adUnitId;
-    protected IBannerManager bannerManager;
-
     public bool adLoaded { get; private set; }
+
+    public event Action OnAdStarted;
+    public event Action OnAdCompleted;
 
     protected virtual void Awake()
     {
@@ -23,41 +25,34 @@ public abstract class AdBaseManager : MonoBehaviour, IUnityAdsLoadListener, IUni
 #endif
     }
 
-    public virtual void Initialize(IBannerManager banner) 
+    public virtual void Initialize()
     {
-        bannerManager = banner;
-        Advertisement.Load(adUnitId, this);
+        LoadAd();
     }
 
     public void LoadAd() => Advertisement.Load(adUnitId, this);
 
     public virtual void OnUnityAdsAdLoaded(string placementId)
     {
-        Debug.Log($"[{GetType().Name}] Load ok");
         adLoaded = true;
     }
 
-    public virtual void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
+    public virtual void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message) 
     {
-        Debug.LogWarning($"[{GetType().Name}] Load failed {adUnitId} - {error} - {message}");
+        adLoaded = false;
     }
-
     public abstract void OnUnityAdsShowComplete(string placementId, UnityAdsShowCompletionState state);
 
-    public virtual void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message)
+    public virtual void OnUnityAdsShowFailure(string placementId, UnityAdsShowError error, string message) 
     {
-        Debug.LogWarning($"Show failed {adUnitId}: {message}");
+        OnAdCompleted?.Invoke();
     }
 
     public virtual void OnUnityAdsShowStart(string placementId)
     {
-        Debug.Log($"{GetType().Name} empezo a mostrarse");
         adLoaded = false;
-        bannerManager.HideBanner();
+        OnAdStarted?.Invoke();
     }
 
-    public virtual void OnUnityAdsShowClick(string placementId)
-    {
-        Debug.Log($"[{GetType().Name}] Click registrado");
-    }
+    public virtual void OnUnityAdsShowClick(string placementId) { }
 }

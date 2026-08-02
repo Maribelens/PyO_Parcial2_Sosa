@@ -1,13 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RPGCombat.Characters;
+using RPGCombat.Combat;
 using System.Linq;
 
 namespace RPGCombat.Grid
 {
-    // SRP: gestiona la grilla. No sabe nada de combate ni de turnos.
+    // SRP gestiona grilla. No sabe combate ni turnos
     public class GridManager : MonoBehaviour
     {
+        // Nombre del hijo del prefab de celda que actúa como highLight de predicción
+        private const string PredictionHighlightName = "PredictionHighlight";
         public static readonly int Rows = 4;
         public static readonly int Cols = 6;
 
@@ -17,8 +20,6 @@ namespace RPGCombat.Grid
 
         private GameObject[,] cells;
         private Dictionary<Vector2Int, ICharacter> occupiedCells = new();
-
-        public Vector2Int GridPosition { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
         private void Awake() => GenerateGrid();
 
@@ -37,7 +38,6 @@ namespace RPGCombat.Grid
         public Vector3 GridToWorld(Vector2Int gridPos)
             => new Vector3(gridPos.x * cellSize, gridPos.y * cellSize, 0f);
 
-        //nuevo
         public Vector2Int WorldToGrid(Vector3 worldPos)
         {
             return new Vector2Int(
@@ -100,26 +100,38 @@ namespace RPGCombat.Grid
             return result;
         }
 
-        public void RevealEnemyPositions(List<Enemy> enemies, int durationInTurns)
+        // Activa el highLight de predicción en las celdas destino de cada enemigo.
+        // Recibe el diccionario calculado por EnemyAI.GetPredictedPositions().
+        // SRP GridManager solo muestra/oculta highlights
+        public void ShowPredictedMovement(Dictionary<Enemy, Vector2Int> predictions)
         {
-            foreach (var enemy in enemies.Where(e => e.IsAlive))
+            HidePredictedMovement(); // limpia highlights anteriores antes de mostrar
+
+            foreach (var kvp in predictions)
             {
-                var pos = enemy.GridPosition;
-                var cell = cells[pos.y, pos.x];
-                var highlight = cell.transform.Find("EnemyHighlight");
-                if (highlight != null)
-                    highlight.gameObject.SetActive(true);
+                Vector2Int targetPos = kvp.Value;
+                if (!IsInBounds(targetPos)) continue;
+
+                var cell = cells[targetPos.y, targetPos.x];
+                SetHighlight(cell, true);
             }
-            // durationInTurns lo maneja TurnManager
         }
 
-        public void HideEnemyHighlights()
+        // Desactiva todos los highlights de predicción activos
+        public void HidePredictedMovement()
         {
             foreach (var cell in cells)
-            {
-                var highlight = cell.transform.Find("EnemyHighlight");
-                    highlight.gameObject.SetActive(false);
-            }
+                SetHighlight(cell, false);
+        }
+
+        // Busca el hijo PredictionHighlight de la celda y lo activa/desactiva
+        private void SetHighlight(GameObject cell, bool active)
+        {
+            var highLight = cell.GetComponent<CellView>();
+            if (highLight != null)
+                highLight.SetHighlight(active);
+            else
+                Debug.LogWarning($"{cell.name} no tiene CellView");
         }
     }
 }

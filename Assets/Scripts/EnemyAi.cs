@@ -26,6 +26,8 @@ namespace RPGCombat.Combat
 
         public IEnumerator ExecuteAllEnemyTurns(List<Enemy> enemies, List<ICharacter> players)
         {
+            gridManager.HidePredictedMovement();
+
             foreach (var enemy in enemies.Where(e => e.IsAlive))
             {
                 yield return StartCoroutine(ExecuteEnemyTurn(enemy, players));

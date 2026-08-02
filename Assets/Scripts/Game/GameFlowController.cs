@@ -5,15 +5,13 @@ using RPGCombat.Combat;
 using RPGCombat.Grid;
 using RPGCombat.Player;
 using RPGCombat.UI;
-using RPGCombat;
-using System.Collections.Generic;
+using RPGCombat.Ads;
 
 namespace RPGCombat
 {
-    // SRP: maneja el ciclo de vida completo de la partida (loop de turnos).
-    // Es el único script que conoce el orden: Init -> turno jugador 1,2,3 ->
-    // turno enemigos -> repetir -> game over.
-    // DIP: todas sus dependencias vienen del Inspector, ninguna se autoinstancia.
+    // SRP maneja ciclo de vida completo de la partida (loop de turnos)
+    // Es el único script que conoce el orden: Init -> turno jugador 1,2,3 -> turno enemigos -> repetir -> game over
+    // DIP toda dependencia viene del Inspector
 
     public class GameFlowController : MonoBehaviour
     {
@@ -28,6 +26,7 @@ namespace RPGCombat
         [SerializeField] private UiGame gameUI;
 
         [Header("Ads")]
+        [SerializeField] private AdEventChannelSo adEventChannel;
         [SerializeField] private AdsManager adsManager;
 
         private int currentPlayerTurnIndex = 0;
@@ -36,7 +35,7 @@ namespace RPGCombat
         {
             // El orden importa: GameInitializer ya corrió su propio Start()
             // (instancia personajes e inyecta GridManager/TurnManager/EnemyAI).
-            // Acá inyectamos lo restante: PlayerController y PlayerTurnController.
+            // inyeccion restante de PlayerController y PlayerTurnController.
 
             Application.targetFrameRate = 60;
             QualitySettings.vSyncCount = 0;
@@ -51,9 +50,44 @@ namespace RPGCombat
             StartNextPlayerTurn();
         }
 
+        private void OnEnable()
+        {
+            adEventChannel.OnWatchAdRequested += OnWatchAdRequested;
+            adEventChannel.OnRewardGranted += OnRewardGranted;
+        }
+
+        private void OnDisable()
+        {
+            adEventChannel.OnWatchAdRequested -= OnWatchAdRequested;
+            adEventChannel.OnRewardGranted -= OnRewardGranted;
+        }
+
         private void OnDestroy()
         {
             turnController.OnTurnEnded -= OnPlayerTurnEnded;
+        }
+
+        private void OnWatchAdRequested()
+        {
+#if UNITY_ANDROID
+            adsManager.ShowRewarded(() =>
+            {
+                adEventChannel.RaiseRewardGranted();
+            });
+#endif
+        }
+
+        private void OnRewardGranted()
+        {
+            Debug.Log("OnRewardGranted llamado");
+            var predictions = enemyAI.GetPredictedPositions(
+                turnManager.GetAliveEnemies(),
+                turnManager.GetAlivePlayers()
+            );
+
+            gridManager.ShowPredictedMovement(predictions);
+            turnManager.ActivateEnemyReveal(2);
+            Debug.Log("ActivateEnemyReveal(2) llamado");
         }
 
         private void StartNextPlayerTurn()
@@ -87,6 +121,8 @@ namespace RPGCombat
             );
 
             if (CheckGameOver()) yield break;
+
+            turnManager.OnRoundEnded();
 
             StartNextPlayerTurn();
         }

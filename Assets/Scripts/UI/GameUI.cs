@@ -13,6 +13,10 @@ namespace RPGCombat.UI
 
     public class GameUI : MonoBehaviour
     {
+        [Header("Tutorial")]
+        [SerializeField] private TutorialPanelUI tutorialPanel;
+        [SerializeField] private Button openTutorialButton;
+
         [Header("Dependencias (asignar en Inspector)")]
         [SerializeField] private PlayerTurnController turnController;
 
@@ -54,6 +58,8 @@ namespace RPGCombat.UI
 
         private void Start()
         {
+            openTutorialButton.onClick.AddListener(() => tutorialPanel.ShowTutorial());
+
             meleeButton.onClick.AddListener(() => SelectActionType(ActionType.Melee));
             rangeButton.onClick.AddListener(() => SelectActionType(ActionType.Range));
             healButton.onClick.AddListener(() => SelectActionType(ActionType.Heal));

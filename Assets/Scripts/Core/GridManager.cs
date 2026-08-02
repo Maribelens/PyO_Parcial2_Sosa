@@ -118,7 +118,6 @@ namespace RPGCombat.Grid
             foreach (var cell in cells)
             {
                 var highlight = cell.transform.Find("EnemyHighlight");
-                if (highlight != null)
                     highlight.gameObject.SetActive(false);
             }
         }

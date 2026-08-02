@@ -3,17 +3,19 @@ using System.Linq;
 using UnityEngine;
 using RPGCombat.Characters;
 using RPGCombat.Grid;
+using RPGCombat.Ads;
 
 namespace RPGCombat.Combat
 {
     public enum GameState { WaitingForInput, EnemyTurn, GameOver }
 
-    // SRP: orquesta el orden de turnos y detecta fin de partida
-    // DIP: recibe listas inyectadas, sin Singleton
+    // SRP orquesta el orden de turnos y detecta fin de partida
+    // DIP recibe listas inyectadas, sin Singleton
     public class TurnManager : MonoBehaviour
     {
         [SerializeField] GridManager gridManager;
-        
+        [SerializeField] private AdEventChannelSo adEventChannel;
+
         private List<ICharacter> players = new();
         private List<Enemy> enemies = new();
         private int currentPlayerIndex = 0;
@@ -24,7 +26,7 @@ namespace RPGCombat.Combat
         public ICharacter ActivePlayer
             => GetAlivePlayers().ElementAtOrDefault(currentPlayerIndex);
 
-        // Inyección de dependencias (DIP)
+        // Inyección de dependencias DIP
         public void Initialize(List<ICharacter> playerList, List<Enemy> enemyList)
         {
             players = playerList;
@@ -49,23 +51,32 @@ namespace RPGCombat.Combat
         public void OnEnemyTurnComplete()
         {
             EvaluateGameOver();
-            if (CurrentState != GameState.GameOver)
+            if (CurrentState != GameState.GameOver) 
+            {
+                OnRoundEnded();
                 CurrentState = GameState.WaitingForInput;
+            }
         }
 
         public void ActivateEnemyReveal(int turns)
         {
             enemyRevealTurnsRemaining = turns;
+            Debug.Log($"enemyRevealTurnsRemaining seteado a: {enemyRevealTurnsRemaining}");
         }
 
         // Llamado al final de cada ronda completa (después del turno enemigo)
         public void OnRoundEnded()
         {
+            Debug.Log($"OnRoundEnded llamado. Turnos restantes: {enemyRevealTurnsRemaining}");
             if (enemyRevealTurnsRemaining > 0)
             {
                 enemyRevealTurnsRemaining--;
-                if (enemyRevealTurnsRemaining == 0)
-                    gridManager.HideEnemyHighlights();
+                if (enemyRevealTurnsRemaining == 0) 
+                {
+                    gridManager.HidePredictedMovement();
+                    adEventChannel.RaiseRewardExpired();
+                    Debug.Log("RaiseRewardExpired disparado");
+                }
             }
         }
 

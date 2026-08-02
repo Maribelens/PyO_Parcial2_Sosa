@@ -1,6 +1,7 @@
 using UnityEngine;
 using RPGCombat.Data;
 using RPGCombat.Characters;
+using System;
 
 // OCP: abierta a extensión mediante subclases, cerrada a modificación
 
@@ -25,6 +26,8 @@ namespace RPGCombat.Characters
         public bool IsAlive => _currentHP > 0;
         public Vector2Int GridPosition { get; set; }
 
+        public event Action<ICharacter> OnCharacterDied;
+
         protected virtual void Awake() => _currentHP = data.maxHP;
 
         public void TakeDamage(int damage)
@@ -39,6 +42,7 @@ namespace RPGCombat.Characters
             if (!IsAlive) return;
             _currentHP = Mathf.Min(data.maxHP, _currentHP + amount);
         }
+
 
         // Cuerpo a cuerpo: celda contigua (distancia Chebyshev == 1, cubre diagonales)
         public bool CanMeleeAttack(ICharacter target)
@@ -57,7 +61,11 @@ namespace RPGCombat.Characters
 
         public abstract bool CanHealTarget(ICharacter target);
 
-        protected virtual void OnDeath() => gameObject.SetActive(false);
+        protected virtual void OnDeath() 
+        {
+            OnCharacterDied?.Invoke(this);
+            gameObject.SetActive(false);
+        }
 
         //Chebyshev: adyacencia en 8 direcciones (incluye diagonal)
         public static int ChebyshevDistance(Vector2Int a, Vector2Int b)

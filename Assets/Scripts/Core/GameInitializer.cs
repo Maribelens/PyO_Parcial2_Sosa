@@ -4,6 +4,7 @@ using RPGCombat.Characters;
 using RPGCombat.Grid;
 using RPGCombat.Combat;
 using RPGCombat.UI;
+using System.Linq;
 
 namespace RPGCombat
 {
@@ -49,6 +50,13 @@ namespace RPGCombat
 
             Players = new List<ICharacter> { fighter, healer, ranger };
             Enemies = new List<Enemy> { enemy1, enemy2 };
+
+            // Suscribir a cada personaje para limpiar la celda al morir
+            foreach (var character in Players.Concat<ICharacter>(Enemies))
+            {
+                if (character is Character ch)
+                    ch.OnCharacterDied += gridManager.RemoveCharacter;
+            }
         }
 
         private void InjectDependencies()

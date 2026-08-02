@@ -46,7 +46,6 @@ namespace RPGCombat.Player
             OnPhaseChanged?.Invoke();
         }
 
-
         private void Update()
         {
             if (CurrentPhase != TurnPhase.Movement) return;
@@ -97,7 +96,6 @@ namespace RPGCombat.Player
 
             return result;
         }
-
         public void ExecuteAction(ActionType type, ICharacter target)
         {
             if (CurrentPhase != TurnPhase.Action) return;
@@ -114,14 +112,12 @@ namespace RPGCombat.Player
 
             EndTurn();
         }
-
         private void EndTurn()
         {
             CurrentPhase = TurnPhase.Done;
             turnManager.EndPlayerTurn();
             OnTurnEnded?.Invoke();
         }
-
         private List<ICharacter> GetAllLivingCharacters()
         {
             var characters = new List<ICharacter>();

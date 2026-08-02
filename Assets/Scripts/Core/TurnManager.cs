@@ -61,13 +61,11 @@ namespace RPGCombat.Combat
         public void ActivateEnemyReveal(int turns)
         {
             enemyRevealTurnsRemaining = turns;
-            Debug.Log($"enemyRevealTurnsRemaining seteado a: {enemyRevealTurnsRemaining}");
         }
 
         // Llamado al final de cada ronda completa (después del turno enemigo)
         public void OnRoundEnded()
         {
-            Debug.Log($"OnRoundEnded llamado. Turnos restantes: {enemyRevealTurnsRemaining}");
             if (enemyRevealTurnsRemaining > 0)
             {
                 enemyRevealTurnsRemaining--;
@@ -75,7 +73,6 @@ namespace RPGCombat.Combat
                 {
                     gridManager.HidePredictedMovement();
                     adEventChannel.RaiseRewardExpired();
-                    Debug.Log("RaiseRewardExpired disparado");
                 }
             }
         }

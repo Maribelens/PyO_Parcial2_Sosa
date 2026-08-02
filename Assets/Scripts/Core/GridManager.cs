@@ -1,8 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RPGCombat.Characters;
-using RPGCombat.Combat;
-using System.Linq;
+using RPGCombat.Utils;
 
 namespace RPGCombat.Grid
 {
@@ -100,8 +99,8 @@ namespace RPGCombat.Grid
             return result;
         }
 
-        // Activa el highLight de predicción en las celdas destino de cada enemigo.
-        // Recibe el diccionario calculado por EnemyAI.GetPredictedPositions().
+        // Activa el highLight de predicción en las celdas destino de cada enemigo
+        // Recibe el diccionario calculado por EnemyAI.GetPredictedPositions()
         // SRP GridManager solo muestra/oculta highlights
         public void ShowPredictedMovement(Dictionary<Enemy, Vector2Int> predictions)
         {
@@ -131,7 +130,7 @@ namespace RPGCombat.Grid
             if (highLight != null)
                 highLight.SetHighlight(active);
             else
-                Debug.LogWarning($"{cell.name} no tiene CellView");
+                Log.Warning($"{cell.name} no tiene CellView");
         }
     }
 }

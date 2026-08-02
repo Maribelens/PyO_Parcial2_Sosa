@@ -7,9 +7,8 @@ using RPGCombat.Player;
 
 namespace RPGCombat.UI 
 {
-    // SRP: solo pinta el estado actual en pantalla y traduce clicks de Button
-    // en llamadas a PlayerTurnController. No decide reglas de turno ni de combate.
-
+    // SRP pinta el estado actual en pantalla y traduce clicks de Button
+    //en llamadas a PlayerTurnController. No decide reglas de turno ni de combate
 
     public class UiGame : MonoBehaviour
     {
@@ -34,7 +33,6 @@ namespace RPGCombat.UI
 
         [Header("Panel de fin de partida")]
         [SerializeField] private CanvasGroup gameOverCanvasGroup;
-        //[SerializeField] private GameObject gameOverPanel;
         [SerializeField] private TMP_Text gameOverLabel;
 
         private List<AvailableAction> currentActions = new();
@@ -60,7 +58,6 @@ namespace RPGCombat.UI
 
             HideTargetButtons();
             SetStateCanvasGroup(gameOverCanvasGroup, false);
-            //gameOverPanel.SetActive(false);
         }
 
         // Se llama cada vez que cambia la fase del turno (movimiento -> acción)
@@ -160,7 +157,6 @@ namespace RPGCombat.UI
         public void ShowGameOver(bool playersWon)
         {
             SetStateCanvasGroup(gameOverCanvasGroup, true);
-            //gameOverPanel.SetActive(true);
             gameOverLabel.text = playersWon ? "¡Victoria!" : "Derrota";
         }
     }

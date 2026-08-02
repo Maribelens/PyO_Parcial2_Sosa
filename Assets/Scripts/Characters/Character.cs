@@ -1,9 +1,9 @@
 using UnityEngine;
 using RPGCombat.Data;
-using RPGCombat.Characters;
+//using RPGCombat.Characters;
 using System;
 
-// OCP: abierta a extensión mediante subclases, cerrada a modificación
+// OCP abierta a extensión mediante subclases, cerrada a modificación
 
 namespace RPGCombat.Characters
 {
@@ -42,7 +42,6 @@ namespace RPGCombat.Characters
             if (!IsAlive) return;
             _currentHP = Mathf.Min(data.maxHP, _currentHP + amount);
         }
-
 
         // Cuerpo a cuerpo: celda contigua (distancia Chebyshev == 1, cubre diagonales)
         public bool CanMeleeAttack(ICharacter target)

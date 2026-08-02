@@ -32,7 +32,6 @@ public class BannerManager : MonoBehaviour, IBannerManager
 
     private void OnBannerLoad()
     {
-        Debug.Log("Banner load success!!!");
         Advertisement.Banner.Show(adUnitId);
     }
 

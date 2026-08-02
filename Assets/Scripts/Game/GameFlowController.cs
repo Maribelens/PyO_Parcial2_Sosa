@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using RPGCombat.Characters;
 using RPGCombat.Combat;
 using RPGCombat.Grid;
 using RPGCombat.Player;
@@ -80,7 +79,6 @@ namespace RPGCombat
 
         private void OnRewardGranted()
         {
-            Debug.Log("OnRewardGranted llamado");
             var predictions = enemyAI.GetPredictedPositions(
                 turnManager.GetAliveEnemies(),
                 turnManager.GetAlivePlayers()
@@ -88,7 +86,6 @@ namespace RPGCombat
 
             gridManager.ShowPredictedMovement(predictions);
             turnManager.ActivateEnemyReveal(2);
-            Debug.Log("ActivateEnemyReveal(2) llamado");
         }
 
         private void StartNextPlayerTurn()

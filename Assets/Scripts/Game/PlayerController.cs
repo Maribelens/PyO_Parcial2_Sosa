@@ -1,9 +1,7 @@
 using RPGCombat.Characters;
 using RPGCombat.Grid;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 namespace RPGCombat.Player
 {

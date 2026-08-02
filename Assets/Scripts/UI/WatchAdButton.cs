@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using RPGCombat.Ads;
-using System;
 
 namespace RPGCombat.UI
 {
@@ -34,7 +33,7 @@ namespace RPGCombat.UI
 
         private void OnButtonClicked()
         {
-            button.interactable = false;    //evita doble click
+            button.interactable = false; //evita doble click
             adEventChannel.RaiseWatchAdRequested();
         }
 

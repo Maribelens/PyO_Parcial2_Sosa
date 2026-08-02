@@ -4,8 +4,8 @@ using RPGCombat.Characters;
 
 namespace RPGCombat.UI
 {
-    // SRP: solo muestra el HP de UN personaje. No decide nada de combate ni turnos.
-    // Se asigna manualmente en el Inspector a cada personaje de la escena.
+    // SRP muestra el HP de UN personaje. No decide combate ni turnos
+    // Se asigna manualmente en el Inspector a cada personaje de la escena
     public class CharacterHPDisplay : MonoBehaviour
     {
         [SerializeField] private TMP_Text label;

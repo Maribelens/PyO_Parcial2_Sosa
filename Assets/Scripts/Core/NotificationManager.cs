@@ -1,12 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using System;
-using System.Xml.Linq;
-using System.Runtime.ConstrainedExecution;
-
-
-
-
+using RPGCombat.Utils;
 #if UNITY_ANDROID
 using Unity.Notifications.Android;
 #endif
@@ -72,7 +66,7 @@ public class NotificationManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Permiso de notificaciones denegado por el usuario.");
+            Log.Warning("Permiso de notificaciones denegado por el usuario.");
         }
     }
 
@@ -98,7 +92,7 @@ public class NotificationManager : MonoBehaviour
         };
 
         AndroidNotificationCenter.SendNotification(notification, ChannelId);
-        Debug.Log($"Notificación programada para {waitForMinutes} minutos");
+        Log.Info($"Notificación programada para {waitForMinutes} minutos");
     }
 #endif
 }

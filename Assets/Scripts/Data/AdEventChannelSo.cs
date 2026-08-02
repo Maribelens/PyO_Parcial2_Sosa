@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace RPGCombat.Ads
 {
-    //solo transporta el evento, no tiene lógica
+    //transporta eventos
     [CreateAssetMenu(fileName = "AdEventChannel", menuName = "RPGCombat/Ad Event Channel")]
     public class AdEventChannelSo : ScriptableObject
     {

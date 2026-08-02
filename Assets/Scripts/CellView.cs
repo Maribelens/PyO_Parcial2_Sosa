@@ -1,4 +1,5 @@
 using UnityEngine;
+using RPGCombat.Utils;
 
 public class CellView : MonoBehaviour
 {
@@ -9,6 +10,6 @@ public class CellView : MonoBehaviour
         if (highlight != null)
             highlight.SetActive(active);
         else
-            Debug.LogWarning($"Highlight no asignado en {name}");
+            Log.Warning($"Highlight no asignado en {name}");
     }
 }

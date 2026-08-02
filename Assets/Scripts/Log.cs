@@ -5,14 +5,21 @@ namespace RPGCombat.Utils
 {
     public static class Log
     {
-        // Se incluirá en el Editor y en Builds de Desarrollo de Android/iOS
+        // Incluido en Editor y en Builds
         [Conditional("DEVELOPMENT_BUILD"), Conditional("UNITY_EDITOR")]
         public static void Info(string message)
         {
             UnityEngine.Debug.Log(message);
         }
 
-        //logs que SIEMPRE aparezcan incluso en producción (como errores críticos)
+        // Advertencias
+        [Conditional("DEVELOPMENT_BUILD"), Conditional("UNITY_EDITOR")]
+        public static void Warning(string message)
+        {
+            UnityEngine.Debug.LogWarning(message);
+        }
+
+        //logs que SIEMPRE aparecen incluso en producción (como errores críticos)
         public static void Error(string message)
         {
             UnityEngine.Debug.LogError(message);

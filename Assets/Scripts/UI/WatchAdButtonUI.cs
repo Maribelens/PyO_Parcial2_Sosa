@@ -6,7 +6,7 @@ namespace RPGCombat.UI
 {
     // SRP Escucha el click y publica el evento
     // No sabe nada de ads ni de recompensas
-    public class WatchAdButton : MonoBehaviour
+    public class WatchAdButtonUI : MonoBehaviour
     {
         [SerializeField] private Button button;
         [SerializeField] private AdEventChannelSo adEventChannel;

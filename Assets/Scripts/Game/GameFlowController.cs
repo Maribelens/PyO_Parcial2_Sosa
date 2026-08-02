@@ -22,7 +22,7 @@ namespace RPGCombat
         [SerializeField] private EnemyAI enemyAI;
         [SerializeField] private PlayerController playerMovement;
         [SerializeField] private PlayerTurnController turnController;
-        [SerializeField] private UiGame gameUI;
+        [SerializeField] private GameUI gameUI;
 
         [Header("Ads & Notifications")]
         [SerializeField] private AdEventChannelSo adEventChannel;

@@ -25,9 +25,10 @@ namespace RPGCombat
         [SerializeField] private PlayerTurnController turnController;
         [SerializeField] private UiGame gameUI;
 
-        [Header("Ads")]
+        [Header("Ads & Notifications")]
         [SerializeField] private AdEventChannelSo adEventChannel;
         [SerializeField] private AdsManager adsManager;
+        [SerializeField] private NotificationManager notificationManager;
 
         private int currentPlayerTurnIndex = 0;
 
@@ -134,6 +135,11 @@ namespace RPGCombat
                 gameUI.ShowGameOver(playersWon: true);
 #if UNITY_ANDROID
                 adsManager.ShowInterstitial();
+                notificationManager.ScheduleNotification(
+                    "¡Victoria!",
+                    "¡Ganaste la batalla! ¿Te animás a jugar de nuevo?",
+                    10
+                );
 #endif
                 return true;
             }
@@ -143,6 +149,11 @@ namespace RPGCombat
                 gameUI.ShowGameOver(playersWon: false);
 #if UNITY_ANDROID
                 adsManager.ShowInterstitial();
+                notificationManager.ScheduleNotification(
+                    "¡Derrota!",
+                    "Tus héroes cayeron en batalla. ¡Volvé a intentarlo!",
+                    10
+                );
 #endif
                 return true;
             }
